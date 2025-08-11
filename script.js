@@ -114,6 +114,7 @@ const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
 console.log(result);
 
+/* Testing out Try/Catch
 function testErr() {
   try {
     const name = "Dave";
@@ -125,4 +126,91 @@ function testErr() {
 }
 
 testErr();
+*/
+console.log(isOverDue("2023-01-26", "2023-01-25"))
+// ------------------ Helper Functions ------------------
 
+/* isOverDue(submitted, due)
+This function will compare the submitted and due date to determine
+if the assigment is over dued.
+Parametters:
+submitted = Date submitted by learner in "YYYY-MM-DD" format
+due = Due date in "YYYY-MM-DD" format
+output => Returns True or False
+*/
+function isOverDue(submitted, due) {
+
+    let submitDate = new Date(submitted);
+    let dueDate = new Date(due);
+    let maxDate = new Date();
+    maxDate.getFullYear() + 10;
+
+  try {
+    if (typeof submitted !== 'string') {
+      throw new TypeError("The submitted date must be a string")
+    } else if (typeof due !== 'string') {
+      throw new TypeError("The due date must be a string")
+    } else if (dueDate >= maxDate) {
+      throw new RangeError("The due date is over 10 years! Please check the date again.")
+    }
+
+        // Insert function's code
+    if (submitDate <= dueDate) {
+      return false;
+    } else {
+      return true;
+    }
+    // End of function's code
+
+
+
+  } catch (error) {
+    if (error instanceof RangeError) {
+      console.error("Range Error:", error.message);
+    } else if (error instanceof TypeError) {
+      console.error("Datatype Error:", error.message);
+    } else
+      throw error;
+  }
+
+
+}
+
+
+
+
+
+
+
+/*
+try {
+  let submitDate = new Date(submitted);
+  let dueDate = new Date(due);
+  let maxDate = new Date().getFullYear + 10;
+
+
+  if (submitDate < dueDate) {
+    console.log(`submitDate: ${submitDate} came before dueDate: ${dueDate}`);
+  } else if (submitDate == dueDate) {
+    console.log(`dueDate: ${dueDate} is the same as submitDate: ${submitDate}`);
+  } else
+    console.log(`dueDate: ${dueDate} came before submitDate: ${submitDate}`);
+
+  if (maxDate >= submitDate || dueDate) {
+    throw new RangeError("This due date is more than 10 years in the future! Please try again.");
+  }
+
+
+
+  console.log(submitDate)
+  console.log(dueDate)
+
+} catch (error) {
+  if (error instanceof RangeError) {
+    console.error("Range Error:", error.message);
+  } else {
+    console.error("Whoops! Looks like somthing happened:", error)
+  }
+
+}
+*/
