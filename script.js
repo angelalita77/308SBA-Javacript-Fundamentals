@@ -91,27 +91,49 @@ function getLearnerData(course, ag, submissions) {
 
   // Need to create the object for finalGrades
   const finalGrades = {};
+  // Gather the necessary data for output
+  const gatherData = {};
 
-  
+ 
 
-// Get learnerID, assignmentID and submission to put in an object sub
-for (let learner of submissions) {
-  const {learner_id, assignment_id, submission} = learner;
-  console.log(learner);
+  // Get learnerID, assignmentID and submission to put in an object sub
+  for(let learner of submissions){
+    // grab the learnerID, assignmentID, and submission information out of the array into an object called learner
+    const {learner_id, assignment_id, submission} = learner;
+    console.log(learner);
 
-  // create an assignment object that can find the assignment
-  // if the value of the assignment_id from LearnersSubmission group matches
-  // the id in the AssignmentGroup.assignments[] array, then it will retrieve that assignent object
-  const assignment = ag.assignments.find(a => a.id === assignment_id);
-  console.log(assignment);
-  
-}
-
-function avgScore (submission, ag, lID){
-  if (submission.learner == lID) {
+    // Find the assignment details that are under the same assigment id found in Leser
+    const assignment = ag.assignments.find(a => a.id === assignment_id);
+    console.log(assignment);
     
+    //If there is no id found then it will create a object using the learnerID
+    if(!gatherData[learner_id] || !gatherData[assignment_id]) {
+      gatherData[learner_id] = {id: learner_id, assignment_id, totalScore: 0, totalPossible: 0}
+    }
+
+    let score = submission.score;
+
+    if(isOverDue (submission.submitted_at, assignment.due_at)) {
+      score = score - score * 0.1;
+      console.log(score);
+    } else {
+      console.log(`Submitted In Time!`);
+    }
+
+    let percentage = score / assignment.points_possible;
+    gatherData[learner_id].totalScore += score;
+
+    console.log(percentage);
+
+    console.log(gatherData);
+
+    
+
   }
-}
+
+
+
+
 
 
 
@@ -161,10 +183,10 @@ output => Returns True or False
 */
 function isOverDue(submitted, due) {
 
-    let submitDate = new Date(submitted);
-    let dueDate = new Date(due);
-    let maxDate = new Date();
-    maxDate.getFullYear() + 10;
+  let submitDate = new Date(submitted);
+  let dueDate = new Date(due);
+  let maxDate = new Date();
+  maxDate.getFullYear() + 10;
 
   try {
     if (typeof submitted !== 'string') {
@@ -175,7 +197,7 @@ function isOverDue(submitted, due) {
       throw new RangeError("The due date is over 10 years! Please check the date again.")
     }
 
-        // Insert function's code
+    // Insert function's code
     if (submitDate <= dueDate) {
       return false;
     } else {
