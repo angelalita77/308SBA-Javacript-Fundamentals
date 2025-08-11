@@ -79,12 +79,15 @@ const LearnerSubmissions = [
 function getLearnerData(course, ag, submissions) {
   // here, we would process this data to achieve the desired result.
 
+  // Check to make sure the course is within the Assignment Group
+isCourseInAssignmentGroup(course, ag);
+
   let result = [];
 
   // Need the following information from objects:
   // LearnersID
   // Score
-  // Points_Possible
+  // Points Possible
   // Due_at
   // Submission Date
   // Assignment ID
@@ -94,26 +97,26 @@ function getLearnerData(course, ag, submissions) {
   // Gather the necessary data for output
   const gatherData = {};
 
- 
+
 
   // Get learnerID, assignmentID and submission to put in an object sub
-  for(let learner of submissions){
+  for (let learner of submissions) {
     // grab the learnerID, assignmentID, and submission information out of the array into an object called learner
-    const {learner_id, assignment_id, submission} = learner;
+    const { learner_id, assignment_id, submission } = learner;
     console.log(learner);
 
     // Find the assignment details that are under the same assigment id found in Leser
     const assignment = ag.assignments.find(a => a.id === assignment_id);
     console.log(assignment);
-    
+
     //If there is no id found then it will create a object using the learnerID
-    if(!gatherData[learner_id] || !gatherData[assignment_id]) {
-      gatherData[learner_id] = {id: learner_id, assignment_id, totalScore: 0, totalPossible: 0}
+    if (!gatherData[learner_id] || !gatherData[assignment_id]) {
+      gatherData[learner_id] = { id: learner_id, assignment_id, totalScore: 0, totalPossible: 0 }
     }
 
     let score = submission.score;
 
-    if(isOverDue (submission.submitted_at, assignment.due_at)) {
+    if (isOverDue(submission.submitted_at, assignment.due_at)) {
       score = score - score * 0.1;
       console.log(score);
     } else {
@@ -127,7 +130,7 @@ function getLearnerData(course, ag, submissions) {
 
     console.log(gatherData);
 
-    
+
 
   }
 
@@ -223,5 +226,17 @@ function isOverDue(submitted, due) {
 /* isCourseInAssignmentGroup(course, assignGroup) 
 This function will check if the ID of the course is in assignment group
 */
+function isCourseInAssignmentGroup(course, assignGroup) {
+  try {
+        if (course.id != assignGroup.course_id) {
+          throw new Error ("This course is not part of the assignment group!")
+          return false;
+        } else
+          return true;
+
+  } catch (error) {
+    console.error("CourseID Error:", error.message)
+  }
+}
 
 
