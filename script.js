@@ -81,14 +81,47 @@ function getLearnerData(course, ag, submissions) {
 
   let result = [];
 
+  // Need the following information from objects:
+  // LearnersID
+  // Score
+  // Points_Possible
+  // Due_at
+  // Submission Date
+  // Assignment ID
+
+  // Need to create the object for finalGrades
+  const finalGrades = {};
+
+  
+
+// Get learnerID, assignmentID and submission to put in an object sub
+for (let learner of submissions) {
+  const {learner_id, assignment_id, submission} = learner;
+  console.log(learner);
+
+  // create an assignment object that can find the assignment
+  // if the value of the assignment_id from LearnersSubmission group matches
+  // the id in the AssignmentGroup.assignments[] array, then it will retrieve that assignent object
+  const assignment = ag.assignments.find(a => a.id === assignment_id);
+  console.log(assignment);
+  
+}
+
+function avgScore (submission, ag, lID){
+  if (submission.learner == lID) {
+    
+  }
+}
+
 
 
 
 
   // Our code here
-  console.log(`Compare`, course);
-  console.log(`Assignment Group`, ag);
-  console.log('Submissions', submissions);
+  // console.log(`Compare`, course);
+  // console.log(CourseInfo.id);
+  // console.log(`Assignment Group`, ag);
+  // console.log('Submissions', submissions);
 
 
 
@@ -114,20 +147,8 @@ const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
 console.log(result);
 
-/* Testing out Try/Catch
-function testErr() {
-  try {
-    const name = "Dave";
-    name = "Joe";
-  } catch (err) {
-    console.error("Whoops! Looks like somthing happened:")
-    console.error(err);
-  }
-}
 
-testErr();
-*/
-console.log(isOverDue("2023-01-26", "2023-01-25"))
+
 // ------------------ Helper Functions ------------------
 
 /* isOverDue(submitted, due)
@@ -177,40 +198,8 @@ function isOverDue(submitted, due) {
 }
 
 
-
-
-
-
-
-/*
-try {
-  let submitDate = new Date(submitted);
-  let dueDate = new Date(due);
-  let maxDate = new Date().getFullYear + 10;
-
-
-  if (submitDate < dueDate) {
-    console.log(`submitDate: ${submitDate} came before dueDate: ${dueDate}`);
-  } else if (submitDate == dueDate) {
-    console.log(`dueDate: ${dueDate} is the same as submitDate: ${submitDate}`);
-  } else
-    console.log(`dueDate: ${dueDate} came before submitDate: ${submitDate}`);
-
-  if (maxDate >= submitDate || dueDate) {
-    throw new RangeError("This due date is more than 10 years in the future! Please try again.");
-  }
-
-
-
-  console.log(submitDate)
-  console.log(dueDate)
-
-} catch (error) {
-  if (error instanceof RangeError) {
-    console.error("Range Error:", error.message);
-  } else {
-    console.error("Whoops! Looks like somthing happened:", error)
-  }
-
-}
+/* isCourseInAssignmentGroup(course, assignGroup) 
+This function will check if the ID of the course is in assignment group
 */
+
+

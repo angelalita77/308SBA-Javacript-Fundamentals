@@ -10,3 +10,9 @@ Implement error handling to manage potential code failures gracefully.
 
 ### Instructions
 You will create a script that gathers data, processes it, and then outputs a consistent result as described by a specification. This is a very typical situation in industry, and this particular scenario has been modified from a real application.
+
+
+### Mentions
+GeeksforGeeks.org
+Title: How to Access Array of Objects in JavaScript ?
+Ref: https://www.geeksforgeeks.org/javascript/how-to-access-array-of-objects-in-javascript/#using-map-method
